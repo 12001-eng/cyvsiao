@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}招生影片 — 啟英高中 國際處{% endblock %}
+
+{% block extra_head %}
+<style>
+  .videos-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: white;
+    padding: 100px 20px 60px;
+    text-align: center;
+  }
+  .videos-hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .videos-hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+  }
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 40px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .videos-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .videos-grid { grid-template-columns: 1fr; }
+  }
+  .video-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-info {
+    padding: 15px;
+  }
+  .video-info h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .video-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+  .pagination a, .pagination span {
+    padding: 8px 14px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .pagination a:hover {
+    background: #f4f6f9;
+    border-color: #ccc;
+  }
+  .pagination .active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="videos-hero">
+  <h1>招生影片</h1>
+  <p>透過影片更生動地了解啟英高中國際處的專班介紹、校園環境與建教合作的精彩內容。</p>
+</section>
+
+<section class="videos-grid">
+  {% for video in pagination.items %}
+  <div class="video-card animate-in">
+    <div class="video-wrapper">
+      <iframe src="{{ video.embed_url }}" title="{{ video.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <h3>{{ video.title }}</h3>
+      {% if video.description %}
+      <p>{{ video.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #777;">
+    <h3>目前暫無招生影片</h3>
+    <p style="margin-top: 10px;">敬請期待後續更新</p>
+  </div>
+  {% endfor %}
+</section>
+
+<!-- Pagination Control -->
+{% if pagination.pages > 1 %}
+<div class="pagination">
+  {% if pagination.has_prev %}
+    <a href="{{ url_for('videos', page=pagination.prev_num) }}">上一頁</a>
+  {% endif %}
+  
+  {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+    {% if p %}
+      {% if p == pagination.page %}
+        <span class="active">{{ p }}</span>
+      {% else %}
+        <a href="{{ url_for('videos', page=p) }}">{{ p }}</a>
+      {% endif %}
+    {% else %}
+      <span style="border:none; background:transparent;">...</span>
+    {% endif %}
+  {% endfor %}
+  
+  {% if pagination.has_next %}
+    <a href="{{ url_for('videos', page=pagination.next_num) }}">下一頁</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

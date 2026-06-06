@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}最新消息 — 啟英高中 國際處{% endblock %}
+
+{% block extra_head %}
+<style>
+  .news-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .news-item {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+  .news-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-color: rgba(196,150,58,0.3);
+  }
+  .news-header {
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .news-date-box {
+    text-align: center;
+    min-width: 70px;
+    padding-right: 20px;
+    border-right: 1px solid #eee;
+  }
+  .news-date-day {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .news-date-month {
+    display: block;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .news-info {
+    flex: 1;
+  }
+  .news-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    background: rgba(196,150,58,0.1);
+    color: var(--gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .news-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .news-toggle-icon {
+    font-size: 20px;
+    color: var(--text-light);
+    transition: transform 0.3s;
+  }
+  .news-item.active .news-toggle-icon {
+    transform: rotate(180deg);
+    color: var(--gold);
+  }
+  
+  .news-content-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+    background: #fafafa;
+  }
+  .news-item.active .news-content-wrapper {
+    max-height: 2000px;
+    transition: max-height 0.4s ease-in-out;
+  }
+  .news-content {
+    padding: 25px;
+    border-top: 1px solid #eee;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-mid);
+  }
+  .news-attachment {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--navy);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .btn-download:hover {
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  @media (max-width: 600px) {
+    .news-header { padding: 15px; gap: 15px; }
+    .news-date-box { min-width: 60px; padding-right: 15px; }
+    .news-title { font-size: 15px; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- NEWS HEADER -->
+<section class="hero" style="min-height: auto; padding: 120px 0 60px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>NEWS & ANNOUNCEMENTS</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 1rem;">最新消息</h1>
+      <p class="hero-subtitle" style="font-size: 1.15rem; color: rgba(255,255,255,0.7);">掌握啟英高中國際處最新動態、招生公告與重要活動通知</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS LIST SECTION -->
+<section class="section news-section" style="background: var(--warm-white); padding: 4rem 1.5rem;">
+  <div class="section-inner">
+    
+    <div class="news-list">
+      {% for item in news %}
+      <div class="news-item animate-in">
+        <div class="news-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="news-date-box">
+            <span class="news-date-day">{% if item.date %}{{ item.date.strftime('%d') }}{% else %}--{% endif %}</span>
+            <span class="news-date-month">{% if item.date %}{{ item.date.strftime('%b') }}{% else %}NEWS{% endif %}</span>
+          </div>
+          <div class="news-info">
+            <span class="news-tag">{{ item.tag }}</span>
+            <h3 class="news-title">{{ item.title }}</h3>
+          </div>
+          <div class="news-toggle-icon">▾</div>
+        </div>
+        <div class="news-content-wrapper">
+          <div class="news-content">
+            {{ item.content | safe }}
+            
+            {% if item.external_link %}
+            <div class="news-external-link" style="margin-top: 15px;">
+              <span style="font-size: 13px;">🔗 相關連結：</span>
+              <a href="{{ item.external_link }}" target="_blank" rel="noopener" class="btn-download" style="background: var(--gold); color: var(--navy);">
+                <span>🌐</span> 前往網站
+              </a>
+            </div>
+            {% endif %}
+
+            {% if item.attachment_path %}
+            <div class="news-attachment">
+              <span style="font-size: 13px;">📎 相關附件：</span>
+              <a href="{{ item.attachment_path }}" download="{{ item.attachment_name }}" class="btn-download">
+                <span>⬇️</span> {{ item.attachment_name }}
+              </a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div style="text-align: center; padding: 5rem 2rem; background: #fff; border-radius: 16px; border: 1px dashed #ccc;">
+        <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5;">📭</div>
+        <h3 style="color: var(--navy); margin-bottom: 0.5rem;">目前尚無公告消息</h3>
+        <p style="color: var(--text-light);">請稍後再回來查看最新的消息內容</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endblock %}

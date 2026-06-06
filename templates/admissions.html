@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}招生資訊 — 啟英高中 國際處{% endblock %}
+
+{% block content %}
+<!-- ADMISSIONS HEADER -->
+<section class="hero" style="min-height: auto; padding: 100px 0 40px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>ADMISSIONS</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 1rem;">招生資訊</h1>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0;">清晰的條件與簡化的流程，陪伴您走好邁向台灣的每一步</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSIONS DETAIL -->
+<section class="section admissions" id="admissions" style="background: var(--warm-white); padding-top: 4rem;">
+  <div class="section-inner">
+    <div class="section-header" style="text-align: center; margin-bottom: 3.5rem;">
+      <div class="section-eyebrow">報名條件</div>
+      <h2 class="section-title">報名資格與學歷要求</h2>
+      <div class="divider" style="margin: 1rem auto;"></div>
+      <p class="section-desc" style="margin: 0 auto;">詳細招生條件依教育部及僑委會當年度公告為準，歡迎隨時與國際處諮詢確認。</p>
+    </div>
+    
+    <div class="adm-grid">
+      {% for req in requirements %}
+      <div class="adm-card">
+        <div class="adm-num">{{ "%02d"|format(loop.index) }}</div>
+        <div class="adm-icon">{{ req.icon }}</div>
+        <h3>{{ req.title }}</h3>
+        <div style="font-size: 0.95rem; color: #666; line-height: 1.6;">{{ req.description | safe }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="adm-process" style="margin-top: 4rem;">
+      <div class="adm-process-title">📋 申請流程</div>
+      <div class="adm-steps">
+        <div class="adm-step">
+          <div class="adm-step-circle">1</div>
+          <div class="adm-step-label">線上預約<br>諮詢</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">2</div>
+          <div class="adm-step-label">備齊<br>申請文件</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">3</div>
+          <div class="adm-step-label">國際處<br>資格初審</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">4</div>
+          <div class="adm-step-label">線上面試<br>與技術測驗</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">5</div>
+          <div class="adm-step-label">核發<br>錄取通知書</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">6</div>
+          <div class="adm-step-label">辦理簽證<br>入台手續</div>
+        </div>
+        <div class="adm-step">
+          <div class="adm-step-circle">7</div>
+          <div class="adm-step-label">學校報到<br>開始就讀</div>
+        </div>
+      </div>
+      
+      <div class="adm-reqs">
+        <div class="adm-req-item">
+          <h4>📄 必備文件</h4>
+          <div>{{ configs.get('admissions_documents', '護照影本、近三個月戶籍謄本（中文）、國中成績單與畢業證書（需經駐外單位驗證）、近期照片2張、健康檢查證明書。') | safe }}</div>
+        </div>
+        <div class="adm-req-item">
+          <h4>📅 重要時程</h4>
+          <div>{{ configs.get('admissions_schedule', '每年 1–3 月辦理海外招生宣傳說明會，5 月底截止報名申請，7–8 月進行資格審查並核發通知，9 月正式入學開學。') | safe }}</div>
+        </div>
+        <div class="adm-req-item">
+          <h4>💳 費用說明</h4>
+          <div>{{ configs.get('admissions_fees', '高職期間享有免學費補助。雜費與書籍費可由政府相關補助支付。建教實習期間的薪資補貼可用於負擔全額生活費用。') | safe }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

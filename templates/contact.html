@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}聯絡我們 — 啟英高中 國際處{% endblock %}
+
+{% block content %}
+<!-- CONTACT HEADER -->
+<section class="hero" style="min-height: auto; padding: 100px 0 40px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>CONTACT US</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 1rem;">聯絡我們</h1>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0;">一對一諮詢服務窗口，無論是學生報名、企業加盟皆有專人即時回應</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT DETAIL & FORM -->
+<section class="section contact" id="contact" style="background: var(--navy); padding-top: 4rem;">
+  <div class="section-inner contact-inner">
+    <div>
+      <div class="section-eyebrow" style="color: var(--gold-light);">聯絡資訊</div>
+      <h2 class="section-title" style="color: #fff;">歡迎洽詢<br>我們將盡快回覆</h2>
+      <div class="divider"></div>
+      <p class="section-desc" style="color: rgba(255,255,255,0.65); margin-bottom: 2rem;">
+        無論您是有意報名 3+4 專班的僑生與家長，或是尋求產學技術加盟的企業夥伴，歡迎使用表單或專用通道與我們取得聯絡。
+      </p>
+      
+      <div class="contact-info">
+        <div class="ci-item">
+          <div class="ci-icon">📍</div>
+          <div class="ci-text">
+            <label>學校地址</label>
+            <p>{{ configs.get('contact_address', '桃園市中壢區吉林路38號 啟英高中 國際處') }}</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">📞</div>
+          <div class="ci-text">
+            <label>聯絡電話</label>
+            <p>{{ configs.get('contact_phone', '+886-3-4523036 轉 國際事務處') }}</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">📧</div>
+          <div class="ci-text">
+            <label>電子信箱</label>
+            <p>{{ configs.get('contact_email', 'international@cyvs.tyc.edu.tw') }}</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">🕐</div>
+          <div class="ci-text">
+            <label>服務時間</label>
+            <p>{{ configs.get('contact_hours', '週一至週五 08:00 – 17:00 (例假日除外)') }}</p>
+          </div>
+        </div>
+        <div class="ci-item">
+          <div class="ci-icon">💬</div>
+          <div class="ci-text">
+            <label>LINE 官方帳號</label>
+            <p>{{ configs.get('contact_line', '@cyvs_international — 僑生線上諮詢第一優先管道') }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact-form">
+      <div class="cf-title">📬 線上諮詢表單</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>姓名 / Name *</label>
+          <input type="text" id="f-name" placeholder="您的姓名">
+        </div>
+        <div class="form-group">
+          <label>國籍 / Nationality</label>
+          <select id="f-country">
+            <option value="">請選擇</option>
+            <option>🇻🇳 越南 Vietnam</option>
+            <option>🇮🇩 印尼 Indonesia</option>
+            <option>🇲🇾 馬來西亞 Malaysia</option>
+            <option>🇵🇭 菲律賓 Philippines</option>
+            <option>🇹🇭 泰國 Thailand</option>
+            <option>🇲🇲 緬甸 Myanmar</option>
+            <option>其他</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>電子信箱 / Email *</label>
+        <input type="email" id="f-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>聯絡電話 / Phone</label>
+        <input type="tel" id="f-phone" placeholder="含國際國碼，如 +84...">
+      </div>
+      <div class="form-group">
+        <label>諮詢類型 *</label>
+        <select id="f-type">
+          <option value="">請選擇諮詢主題</option>
+          <option>3+4 僑生專班報名</option>
+          <option>建教合作企業洽談</option>
+          <option>招生資格與學歷確認</option>
+          <option>生活輔導與宿舍相關</option>
+          <option>其他業務諮詢</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>諮詢內容 / Message *</label>
+        <textarea id="f-msg" placeholder="請填寫您的具體需求，我們將於 1–2 個工作日內由專責人員直接與您取得聯絡..."></textarea>
+      </div>
+      <button type="button" class="form-submit" onclick="submitForm()">🚀 送出諮詢表單</button>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+async function submitForm(){
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const country = document.getElementById('f-country').value;
+  const type = document.getElementById('f-type').value;
+  const msg = document.getElementById('f-msg').value.trim();
+
+  if(!name || !email || !type || !msg){
+    alert('請填寫所有必填欄位（*）後再送出。');
+    return;
+  }
+
+  try {
+    const response = await fetch("{{ url_for('api_contact') }}", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, country, type, msg })
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      alert(result.error || '送出失敗，請稍後再試。');
+      return;
+    }
+
+    alert(result.message || '已送出，感謝您的諮詢。');
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-msg').value = '';
+    document.getElementById('f-type').value = '';
+    document.getElementById('f-country').value = '';
+  } catch (error) {
+    console.error(error);
+    alert('送出失敗，請稍後再試。');
+  }
+}
+</script>
+{% endblock %}

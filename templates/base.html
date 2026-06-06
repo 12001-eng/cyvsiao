@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}啟英高中 國際處 — 僑生專班招生暨建教合作{% endblock %}</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    /* Google Translate Overrides - Hide Banner Stronger */
+    html, body { top: 0px !important; margin-top: 0px !important; position: relative !important; }
+    iframe.goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate,
+    .VIpgJd-ZVi9od-ORHb-OEVmcd { display: none !important; opacity: 0 !important; pointer-events: none !important; }
+    .goog-tooltip { display: none !important; }
+    .goog-tooltip:hover { display: none !important; }
+    .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+    #goog-gt-tt { display: none !important; }
+
+    /* Translated Mode Layout Overlay */
+    body.lang-translated .nav-links { display: none !important; }
+    body.lang-translated .nav-hamburger { display: block !important; }
+
+    @media(min-width: 901px) {
+        /* Prevent lingering open mobile menu on desktop interface */
+        body:not(.lang-translated) .mobile-menu { display: none !important; }
+
+        body.lang-translated .mobile-menu {
+            position: absolute;
+            top: 70px;
+            right: 2rem;
+            width: max-content;
+            min-width: 200px;
+            max-height: 75vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(196,150,58,0.2);
+        }
+    }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="{{ url_for('index') }}" class="nav-logo">
+        <div class="nav-logo-badge">啟英</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-main">啟英高中國際處</span>
+          <span class="nav-logo-sub">International Affairs Office</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('about') }}">關於我們</a></li>
+        <li><a href="{{ url_for('news') }}">最新消息</a></li>
+        <li><a href="{{ url_for('office') }}">業務職掌</a></li>
+        <li><a href="{{ url_for('faculty') }}">師資陣容</a></li>
+        <li><a href="{{ url_for('programs') }}">專班介紹</a></li>
+        <li><a href="{{ url_for('admissions') }}">招生資訊</a></li>
+        <li><a href="{{ url_for('videos') }}">招生影片</a></li>
+        <li><a href="{{ url_for('cooperative') }}">建教合作</a></li>
+        <li><a href="{{ url_for('gallery') }}">活動剪影</a></li>
+        <li><a href="{{ url_for('sop_flowchart') }}">案件處理SOP</a></li>
+        <li>
+          <select class="nav-lang-selector notranslate" onchange="translateLanguage(this.value)">
+            <option value="zh-TW">🌐 中文</option>
+            <option value="en">🌐 英文 (English)</option>
+            <option value="vi">🌐 越南語 (Tiếng Việt)</option>
+            <option value="my">🌐 緬甸語 (မြန်မာ)</option>
+            <option value="th">🌐 泰語 (ไทย)</option>
+            <option value="km">🌐 柬埔寨語 (ខ្មែរ)</option>
+          </select>
+        </li>
+        <li><a href="{{ url_for('contact') }}" class="nav-cta">立即諮詢</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="選單">&#9776;</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="{{ url_for('about') }}">關於我們</a>
+      <a href="{{ url_for('news') }}">最新消息</a>
+      <a href="{{ url_for('office') }}">業務職掌</a>
+      <a href="{{ url_for('faculty') }}">師資陣容</a>
+      <a href="{{ url_for('programs') }}">專班介紹</a>
+      <a href="{{ url_for('admissions') }}">招生資訊</a>
+      <a href="{{ url_for('videos') }}">招生影片</a>
+      <a href="{{ url_for('cooperative') }}">建教合作</a>
+      <a href="{{ url_for('gallery') }}">活動剪影</a>
+      <a href="{{ url_for('sop_flowchart') }}">案件處理SOP</a>
+      <select class="nav-lang-selector mobile-lang-selector notranslate" onchange="translateLanguage(this.value)">
+        <option value="zh-TW">🌐 中文</option>
+        <option value="en">🌐 英文 (English)</option>
+        <option value="vi">🌐 越南語 (Tiếng Việt)</option>
+        <option value="my">🌐 緬甸語 (မြန်မာ)</option>
+        <option value="th">🌐 泰語 (ไทย)</option>
+        <option value="km">🌐 柬埔寨語 (ខ្មែរ)</option>
+      </select>
+      <a href="{{ url_for('contact') }}">立即諮詢</a>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  {% block content %}{% endblock %}
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+          <div class="nav-logo-badge" style="width:40px;height:40px">啟</div>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#fff">啟英高中 國際處</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.06em">International Affairs Office
+            </div>
+          </div>
+        </div>
+        <p>專注東南亞僑生教育，致力培育兼備語言能力與職業技術的優秀人才，橋接東南亞與台灣職業未來。</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速連結</h4>
+        <ul>
+          <li><a href="{{ url_for('about') }}">關於國際處</a></li>
+          <li><a href="{{ url_for('programs') }}">3+4 專班介紹</a></li>
+          <li><a href="{{ url_for('admissions') }}">招生資訊</a></li>
+          <li><a href="{{ url_for('cooperative') }}">建教合作</a></li>
+          <li><a href="{{ url_for('news') }}">最新消息</a></li>
+          <li><a href="https://www.ocac.gov.tw/OCAC/Pages/List.aspx?nodeid=6500" target="_blank"
+              rel="noopener">僑委會產學攜手專班</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>招生國家</h4>
+        <ul>
+          <li><a href="{{ url_for('contact') }}">🇻🇳 越南</a></li>
+          <li><a href="{{ url_for('contact') }}">🇮🇩 印尼</a></li>
+          <li><a href="{{ url_for('contact') }}">🇲🇲 緬甸</a></li>
+          <li><a href="{{ url_for('contact') }}">🇵🇭 菲律賓</a></li>
+          <li><a href="{{ url_for('contact') }}">🇹🇭 泰國</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>法規依據</h4>
+        <ul>
+          <li><a href="https://edu.law.moe.gov.tw" target="_blank" rel="noopener">教育部相關法規</a></li>
+          <li><a href="https://www.ocac.gov.tw" target="_blank" rel="noopener">僑務委員會規定</a></li>
+          <li><a href="https://edu.law.moe.gov.tw/LawContent.aspx?id=FL009147" target="_blank"
+              rel="noopener">建教合作實施辦法</a></li>
+          <li><a href="https://edu.law.moe.gov.tw" target="_blank" rel="noopener">僑生輔導辦法</a></li>
+          <li><a href="{{ url_for('contact') }}">個人資料保護聲明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 啟英高中國際處 — 版權所有，不得轉載</p>
+      <p>僑生諮詢專線 | 建教合作洽詢 | 週一至週五辦公</p>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">✅ 表單已送出！我們將於 1–2 個工作日內回覆您。</div>
+
+  <!-- SCROLL TOP -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+    aria-label="回到頂部">↑</button>
+
+  <!-- CHATBOT UI -->
+  <div class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()" aria-label="打開問答機器人">🤖</div>
+
+  <div class="chatbot-container" id="chatbotContainer">
+    <div class="chatbot-header">
+      <div class="chatbot-header-title">
+        <span>🤖</span>
+        <div>
+          <div style="font-size: 14px; font-weight: 700;">啟英 AI 智能助手</div>
+          <div style="font-size: 10px; opacity: 0.8;">在線為您服務</div>
+        </div>
+      </div>
+      <div class="chatbot-close" onclick="toggleChatbot()">×</div>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chat-msg bot">您好！我是啟英高中國際處的 AI 助手。請問有什麼我可以幫您的嗎？您可以詢問關於招生、專班介紹、或建教合作的問題。</div>
+    </div>
+    <form class="chatbot-input-area" id="chatbotForm" onsubmit="handleChatSubmit(event)">
+      <input type="text" class="chatbot-input" id="chatbotInput" placeholder="輸入您的問題..." autocomplete="off">
+      <button type="submit" class="chatbot-send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <script>
+    // Chatbot Logic
+    function toggleChatbot() {
+      const container = document.getElementById('chatbotContainer');
+      const toggle = document.getElementById('chatbotToggle');
+      container.classList.toggle('active');
+      toggle.classList.toggle('active');
+
+      if (container.classList.contains('active')) {
+        document.getElementById('chatbotInput').focus();
+      }
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chatbotInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage('user', text);
+      input.value = '';
+
+      // Simulated Bot Response
+      setTimeout(() => {
+        let response = "抱歉，我還在學習中。您可以前往「聯絡我們」頁面填寫表單，或撥打我們的諮詢專線，我們將有專人為您服務。";
+
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes('招生') || lowerText.includes('入學')) {
+          response = "啟英高中國際處每年 1-3 月辦理海外招生。如果您想了解更多報名細節，可以查看「招生資訊」頁面。";
+        } else if (lowerText.includes('費用') || lowerText.includes('學費')) {
+          response = "高職期間僑生享有免學費補助，實習期間還能領取基本工資以上的津貼喔！";
+        } else if (lowerText.includes('科系') || lowerText.includes('專班')) {
+          response = "我們目前有資訊科技、時尚造型科(美容美髮)等多種專業科系，您可以查看「專班介紹」了解更多。";
+        } else if (lowerText.includes('建教合作') || lowerText.includes('合作方式')) {
+          response = "您可以查看「建教合作方式」了解更多。";
+        } else if (lowerText.includes('聯絡') || lowerText.includes('我們')) {
+          response = "您可以前往「聯絡我們」頁面填寫表單，或撥打我們的諮詢專線，我們將有專人為您服務。";
+        } else if (lowerText.includes('師資') || lowerText.includes('教師')) {
+          response = "我們目前有資訊科技、時尚造型科(美容美髮)等多種專業科系，您可以查看「師資信息」了解更多。";
+        } else if (lowerText.includes('你好') || lowerText.includes('hello')) {
+          response = "您好！很高興能為您服務。請問您對啟英高中的僑生專班有什麼興趣嗎？";
+        }
+
+        appendMessage('bot', response);
+      }, 800);
+    }
+
+    function appendMessage(type, text) {
+      const messages = document.getElementById('chatbotMessages');
+      const div = document.createElement('div');
+      div.className = `chat-msg ${type}`;
+      div.textContent = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function () {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+    // Close mobile menu on link click
+    document.querySelectorAll('#mobileMenu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+    });
+
+    // Scroll top button
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.getElementById('scrollTop');
+      if (scrollTop) {
+        scrollTop.classList.toggle('show', window.scrollY > 400);
+      }
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.animate-in').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+
+  <!-- Analytics Tracking Script -->
+  <script>
+    (function () {
+      if (window.location.pathname.startsWith('/admin') || window.location.pathname.startsWith('/api')) return;
+
+      const pageLoadTime = Date.now();
+      let visitId = null;
+
+      fetch('/api/analytics/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: window.location.pathname })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.visit_id) {
+            visitId = data.visit_id;
+          }
+        }).catch(err => console.warn('Analytics tracking error:', err));
+
+      window.addEventListener('beforeunload', () => {
+        if (visitId) {
+          const duration = Math.round((Date.now() - pageLoadTime) / 1000);
+          const data = JSON.stringify({ visit_id: visitId, duration: duration });
+          const blob = new Blob([data], { type: 'application/json' });
+          navigator.sendBeacon('/api/analytics/duration', blob);
+        }
+      });
+    })();
+  </script>
+
+  <div id="google_translate_element" style="position:absolute; width:1px; height:1px; overflow:hidden; top:-1000px; left:-1000px;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'zh-TW',
+        includedLanguages: 'zh-TW,en,vi,my,th,km',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    function translateLanguage(lang) {
+        document.querySelectorAll('.nav-lang-selector').forEach(function(el) {
+            el.value = lang;
+        });
+
+        var selectField = document.querySelector(".goog-te-combo");
+        if(selectField) {
+            selectField.value = lang;
+            selectField.dispatchEvent(new Event('change'));
+        }
+
+        if(lang && lang !== 'zh-TW') {
+            document.body.classList.add('lang-translated');
+        } else {
+            document.body.classList.remove('lang-translated');
+            var mm = document.getElementById('mobileMenu');
+            if(mm) mm.classList.remove('open');
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      // Force remove Google translate top spacing dynamically
+      setInterval(function() {
+          if(document.body && document.body.style.top !== '0px') {
+              document.body.style.top = '0px';
+          }
+          var banners = document.querySelectorAll('.goog-te-banner-frame, .VIpgJd-ZVi9od-ORHb-OEVmcd');
+          banners.forEach(b => b.style.display = 'none');
+      }, 500);
+
+      setTimeout(function() {
+        var langCookie = document.cookie.match(/(^|;) ?googtrans=([^;]*)(;|$)/);
+        if(langCookie && langCookie[2]) {
+          var parts = decodeURIComponent(langCookie[2]).split('/');
+          var lang = parts[parts.length-1];
+          if(lang) {
+            document.querySelectorAll('.nav-lang-selector').forEach(function(el) {
+                el.value = lang;
+            });
+            if(lang !== 'zh-TW') {
+                document.body.classList.add('lang-translated');
+            }
+          }
+        }
+      }, 1000);
+    });
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  {% block extra_script %}{% endblock %}
+</body>
+
+</html>

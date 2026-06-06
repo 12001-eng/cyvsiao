@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}啟英高中 國際處 — 僑生專班招生暨建教合作{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero" id="hero" style="min-height: auto; padding-bottom: 4rem;">
+  <div class="hero-pattern"></div>
+  <div class="hero-geo">
+    <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="250,50 450,450 50,450" fill="none" stroke="white" stroke-width="1"/>
+      <polygon points="250,120 400,420 100,420" fill="none" stroke="white" stroke-width="0.5"/>
+      <circle cx="250" cy="250" r="180" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="250" cy="250" r="120" fill="none" stroke="white" stroke-width="0.5"/>
+      <circle cx="250" cy="250" r="60" fill="none" stroke="white" stroke-width="0.5"/>
+      <line x1="50" y1="250" x2="450" y2="250" stroke="white" stroke-width="0.5"/>
+      <line x1="250" y1="50" x2="250" y2="450" stroke="white" stroke-width="0.5"/>
+      <line x1="80" y1="80" x2="420" y2="420" stroke="white" stroke-width="0.3"/>
+      <line x1="420" y1="80" x2="80" y2="420" stroke="white" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="hero-inner" style="padding-top: 4rem; padding-bottom: 2rem;">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        <span>東南亞僑生招生 ・ 產學攜手合作</span>
+      </div>
+      <h1 class="hero-title">
+        連結東南亞<br>
+        <span class="gold">築夢台灣</span><br>
+        職業未來
+      </h1>
+      <p class="hero-subtitle">
+        啟英高中國際處專推東南亞 3+4 產學攜手合作僑生專班，
+        協助海外僑生透過完整職業訓練與建教合作機制，在台灣實現職涯目標。
+      </p>
+      <div class="hero-actions">
+        <a href="{{ url_for('admissions') }}" class="btn-primary">📋 招生資訊與流程</a>
+        <a href="{{ url_for('cooperative') }}" class="btn-outline">🤝 企業建教合作</a>
+      </div>
+      <div class="hero-stats">
+        {% for stat in hero_stats %}
+        <div class="hero-stat">
+          <span class="hero-stat-num" {% if loop.index == 1 %}id="ctr-countries"{% elif loop.index == 2 %}id="ctr-students"{% elif loop.index == 3 %}id="ctr-companies"{% elif loop.index == 4 %}id="ctr-years"{% endif %}>
+            {{ stat.value }}
+          </span>
+          <span class="hero-stat-label">{{ stat.label }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+      <div class="hero-card">
+      <div class="hero-card-title">🌏 招生來源國</div>
+      <div class="country-grid">
+        <div class="country-item"><span class="country-flag">🇻🇳</span><div class="country-info"><span class="country-name">越南</span><span class="country-count">主要招生地</span></div></div>
+        <div class="country-item"><span class="country-flag">🇮🇩</span><div class="country-info"><span class="country-name">印尼</span><span class="country-count">主要招生地</span></div></div>
+        <div class="country-item"><span class="country-flag">🇲🇲</span><div class="country-info"><span class="country-name">緬甸</span><span class="country-count">主要招生地</span></div></div>
+        <div class="country-item"><span class="country-flag">🇵🇭</span><div class="country-info"><span class="country-name">菲律賓</span><span class="country-count">新興招生地</span></div></div>
+        <div class="country-item"><span class="country-flag">🇹🇭</span><div class="country-info"><span class="country-name">泰國</span><span class="country-count">新興招生地</span></div></div>
+        <div class="country-item"><span class="country-flag">🇰🇭</span><div class="country-info"><span class="country-name">柬埔寨</span><span class="country-count">新興招生地</span></div></div>
+      </div>
+      <div class="hero-card-note">
+        ※ 依教育部僑務委員會規定辦理，歡迎具有中華民國國籍或華裔背景之東南亞青年報名
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT HIGHLIGHTS -->
+<section class="section about" id="about-summary">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-eyebrow">關於我們</div>
+        <h2 class="section-title">培育雙語技術人才<br>橋接產學未來</h2>
+        <div class="divider"></div>
+        <p class="section-desc" style="margin-bottom: 2rem;">
+          啟英高中國際處推動東南亞僑生教育，提供 3+4 七年一貫完整學程。
+          整合優質企業建教資源，讓僑生在獲得台灣正式學歷的同時，習得實用職業技能。
+        </p>
+        <a href="{{ url_for('about') }}" class="btn-primary">詳細關於國際處 →</a>
+      </div>
+      <div>
+        <div class="about-features" style="margin-top: 0;">
+          {% for item in index_features %}
+          <div class="feature-card">
+            <div class="feature-icon fi-blue">{{ item.icon }}</div>
+            <div class="feature-text">
+              <h4>{{ item.title }}</h4>
+              <div style="font-size: 0.9rem; color: #666; line-height: 1.5;">{{ item.description | safe }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS PREVIEW -->
+<section class="section programs" id="programs-summary" style="background: var(--cream);">
+  <div class="section-inner">
+    <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+      <div class="section-eyebrow">專班介紹</div>
+      <h2 class="section-title">熱門招生科系與健全福利</h2>
+      <div class="divider" style="margin: 1rem auto;"></div>
+      <p class="section-desc" style="margin: 0 auto;">多元適配的職業方向，助海外華裔青年一展所長。</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+      {% for field in program_fields %}
+      <div class="adm-card" style="text-align: center;">
+        <div class="adm-icon">{{ field.icon }}</div>
+        <h3>{{ field.name }}</h3>
+        <div style="font-size: 0.95rem; color: #666; line-height: 1.6;">{{ field.description | striptags | truncate(60) }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div style="text-align: center;">
+      <a href="{{ url_for('programs') }}" class="btn-primary">探索更多專班細則與福利 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST NEWS -->
+<section class="section news" id="news-summary" style="background: var(--warm-white);">
+  <div class="section-inner">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="section-eyebrow">最新消息</div>
+        <h2 class="section-title" style="margin-bottom:0">近期公告與活動</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="{{ url_for('news') }}" class="btn-primary" style="white-space:nowrap">查看全部公告 →</a>
+    </div>
+    <div class="news-list-home">
+      {% for item in news %}
+      <a href="{{ url_for('news') }}" class="news-item-row animate-in">
+        <div class="news-date-tag">
+          <span class="day">{% if item.date %}{{ item.date.strftime('%d') }}{% else %}--{% endif %}</span>
+          <span class="month">{% if item.date %}{{ item.date.strftime('%b') }}{% else %}NEWS{% endif %}</span>
+        </div>
+        <div class="news-content-brief">
+          <span class="tag">{{ item.tag }}</span>
+          <h3 class="title">{{ item.title }}</h3>
+          <div class="excerpt">
+            {{ item.content | striptags | truncate(100) | safe }}
+          </div>
+        </div>
+        <div class="news-arrow">→</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="section contact" id="cta" style="padding: 5rem 2rem;">
+  <div class="section-inner" style="text-align: center; max-width: 800px;">
+    <div class="section-eyebrow" style="color: var(--gold-light);">START YOUR FUTURE</div>
+    <h2 class="section-title" style="color: #fff; margin-bottom: 1.5rem;">準備好開啟您的台灣留學旅程了嗎？</h2>
+    <p class="section-desc" style="color: rgba(255,255,255,0.7); margin: 0 auto 2.5rem;">
+      國際處提供全程的一對一入學資格諮詢、簽證與居留協助、以及優質建教企業的實習媒合。
+      無論您是海外僑生、家長，或有興趣合作的企業夥伴，我們均有專人為您解答。
+    </p>
+    <div style="display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 10;">
+      <a href="javascript:void(0)" onclick="toggleChatbot()" class="btn-primary" style="padding: 15px 40px; font-size: 16px;">🤖 啟英 AI 智能問答機器人</a>
+      <a href="/contact" class="btn-outline" style="padding: 14px 35px; font-size: 16px;">💼 聯絡國際處行政團隊</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+let counted=false;
+function startCounters(){
+  if(counted)return;counted=true;
+  animateCounter(document.getElementById('ctr-countries'),6,'個',1200);
+  animateCounter(document.getElementById('ctr-students'),150,'+',1500);
+  animateCounter(document.getElementById('ctr-companies'),45,'+',1800);
+  animateCounter(document.getElementById('ctr-years'),12,'年',1400);
+}
+
+// Intersection observer for animations
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      if(e.target.id==='hero'||e.target.closest('.hero'))startCounters();
+    }
+  });
+},{threshold:0.15});
+document.querySelectorAll('.animate-in').forEach(el=>obs.observe(el));
+
+// Start counters when page loads (visible on hero)
+window.addEventListener('load',()=>{
+  setTimeout(startCounters,800);
+});
+</script>
+{% endblock %}

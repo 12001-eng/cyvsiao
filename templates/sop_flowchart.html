@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}僑生案件處理SOP流程圖{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sop.css') }}">
+<style>
+  .sop-selector {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .sop-sel-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(196, 150, 58, 0.4);
+    background: rgba(13, 31, 60, 0.6);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: var(--transition);
+  }
+  .sop-sel-btn:hover {
+    background: rgba(196, 150, 58, 0.2);
+  }
+  .sop-sel-btn.active {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    border-color: var(--gold);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="sr-only">僑生案件處理SOP互動流程圖</h2>
+
+<div class="wrap">
+  <!-- SOP Selector if multiple -->
+  {% if sop_pages|length > 1 %}
+  <div class="sop-selector">
+    {% for page in sop_pages %}
+    <button class="sop-sel-btn {% if loop.first %}active{% endif %}" onclick="switchSOP({{ loop.index0 }}, this)">
+      {{ page.title }}
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div id="sop-content-area">
+    <div class="title-bar">
+      <h1 id="sop-title"></h1>
+      <p id="sop-subtitle"></p>
+    </div>
+
+    <div class="tabs" id="sop-tabs"></div>
+
+    <div id="sop-sections"></div>
+
+    <div class="notes-grid" id="sop-notes"></div>
+
+    <div class="principle" id="sop-principle"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+  const allSOPPages = {{ sop_pages | tojson }};
+  let currentSOPIndex = 0;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderSOP(allSOPPages[currentSOPIndex]);
+  });
+
+  function switchSOP(index, btn) {
+    currentSOPIndex = index;
+    // Update active state
+    document.querySelectorAll('.sop-sel-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Re-render
+    renderSOP(allSOPPages[currentSOPIndex]);
+  }
+
+  function renderSOP(data) {
+    const tabsContainer = document.getElementById('sop-tabs');
+    const sectionsContainer = document.getElementById('sop-sections');
+    const notesContainer = document.getElementById('sop-notes');
+    const titleEl = document.getElementById('sop-title');
+    const subtitleEl = document.getElementById('sop-subtitle');
+    const principleEl = document.getElementById('sop-principle');
+
+    // Reset containers
+    tabsContainer.innerHTML = '';
+    sectionsContainer.innerHTML = '';
+    notesContainer.innerHTML = '';
+    
+    // Set basic info
+    titleEl.textContent = data.title;
+    subtitleEl.textContent = data.subtitle;
+    principleEl.innerHTML = data.principle;
+
+    // Render Tabs and Sections
+    data.categories.forEach((category, index) => {
+      // Create Tab Button
+      const tabButton = document.createElement('button');
+      tabButton.classList.add('tab');
+      if (index === 0) {
+        tabButton.classList.add(`active-${category.color_class}`);
+      }
+      tabButton.setAttribute('onclick', `showTab('${category.color_class}', this)`);
+      tabButton.textContent = category.name;
+      tabsContainer.appendChild(tabButton);
+
+      // Create Section Div
+      const sectionDiv = document.createElement('div');
+      sectionDiv.classList.add('section', category.color_class);
+      if (index === 0) {
+        sectionDiv.classList.add('visible');
+      }
+      sectionDiv.id = `sec-${category.color_class}`;
+
+      const flowDiv = document.createElement('div');
+      flowDiv.classList.add('flow');
+
+      category.steps.forEach((step, stepIndex) => {
+        // Step Row
+        const stepRow = document.createElement('div');
+        stepRow.classList.add('step-row');
+
+        const stepNum = document.createElement('div');
+        stepNum.classList.add('step-num');
+        const stepNumSpan = document.createElement('span');
+        stepNumSpan.textContent = step.step_num_label;
+        stepNum.appendChild(stepNumSpan);
+        stepRow.appendChild(stepNum);
+
+        const stepBody = document.createElement('div');
+        stepBody.classList.add('step-body');
+        const stepTitle = document.createElement('div');
+        stepTitle.classList.add('step-title');
+        stepTitle.textContent = step.title;
+        stepBody.appendChild(stepTitle);
+        const stepDesc = document.createElement('div');
+        stepDesc.classList.add('step-desc');
+        stepDesc.innerHTML = step.description;
+        stepBody.appendChild(stepDesc);
+        const stepResp = document.createElement('div');
+        stepResp.classList.add('step-resp');
+        stepResp.textContent = step.responsibilities;
+        stepBody.appendChild(stepResp);
+        stepRow.appendChild(stepBody);
+
+        flowDiv.appendChild(stepRow);
+
+        if (stepIndex < category.steps.length - 1 || category.alerts.length > 0) {
+          const arrowDown = document.createElement('div');
+          arrowDown.classList.add('arrow-down');
+          arrowDown.textContent = '↓';
+          flowDiv.appendChild(arrowDown);
+        }
+      });
+
+      category.alerts.forEach(alert => {
+        const alertRow = document.createElement('div');
+        alertRow.classList.add('alert-row');
+        const alertIcon = document.createElement('div');
+        alertIcon.classList.add('alert-icon');
+        alertIcon.textContent = '⚠';
+        alertRow.appendChild(alertIcon);
+        const alertText = document.createElement('div');
+        alertText.classList.add('alert-text');
+        alertText.textContent = alert.message;
+        alertRow.appendChild(alertText);
+        flowDiv.appendChild(alertRow);
+      });
+
+      sectionDiv.appendChild(flowDiv);
+      sectionsContainer.appendChild(sectionDiv);
+    });
+
+    // Render Notes
+    data.notes.forEach(note => {
+      const noteCard = document.createElement('div');
+      noteCard.classList.add('note-card');
+      const noteLabel = document.createElement('div');
+      noteLabel.classList.add('note-label');
+      noteLabel.textContent = note.label;
+      noteCard.appendChild(noteLabel);
+      const noteBody = document.createElement('div');
+      noteBody.classList.add('note-body');
+      noteBody.innerHTML = note.body;
+      noteCard.appendChild(noteBody);
+      notesContainer.appendChild(noteCard);
+    });
+  }
+
+  function showTab(color, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    const target = document.getElementById('sec-' + color);
+    if (target) target.classList.add('visible');
+    
+    document.querySelectorAll('.tab').forEach(t => {
+      // Remove all active classes
+      t.classList.remove('active-teal', 'active-purple', 'active-coral');
+    });
+    btn.classList.add('active-' + color);
+  }
+</script>
+{% endblock %}

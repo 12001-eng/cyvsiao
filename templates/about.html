@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}關於我們 — 啟英高中 國際處{% endblock %}
+
+{% block content %}
+<!-- ABOUT HEADER -->
+<section class="hero" style="min-height: auto; padding: 100px 0 40px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>ABOUT US</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 1rem;">關於國際處</h1>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0;">專注東南亞僑生教育，致力培育雙語職業技術精英</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT DETAIL -->
+<section class="section about" style="background: var(--warm-white);">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        {% if intros %}
+        <div class="section-eyebrow">國際處簡介</div>
+        <h2 class="section-title">{{ intros[0].title | safe }}</h2>
+        <div class="divider"></div>
+        <div class="section-desc" style="margin-bottom: 1.5rem;">{{ intros[0].body | safe }}</div>
+        {% if intros|length > 1 %}
+        {% for intro in intros[1:] %}
+        <div class="section-desc" style="margin-bottom: 1.5rem;">
+          <strong>{{ intro.subtitle }}</strong><br>
+          {{ intro.body | safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% else %}
+        <div class="section-eyebrow">國際處簡介</div>
+        <h2 class="section-title">培育雙語技術人才<br>為僑生創造最佳學習與就業環境</h2>
+        <div class="divider"></div>
+        <p class="section-desc" style="margin-bottom: 1.5rem;">
+          啟英高中國際處成立以來，致力推動東南亞僑生教育，透過嚴謹的課程規劃與產業合作，
+          培育具備雙語能力及職業技術的優秀人才，為僑生在台灣創造最佳學習與就業環境。
+        </p>
+        <p class="section-desc" style="margin-bottom: 2rem;">
+          我們結合「高職 3 年 + 大學 4 年」的 7 年一貫產學攜手合作模式。
+          在校學習與企業實習交替進行，不僅保障學生在實習期間的各項勞動權益與生活津貼，更提供專業的華語輔導與生活照顧，讓海外青年安心求學、成就不凡未來。
+        </p>
+        {% endif %}
+        
+        <div class="about-features">
+          <div class="feature-card">
+            <div class="feature-icon fi-blue">🎓</div>
+            <div class="feature-text">
+              <h4>完整學程規劃</h4>
+              <p>3+4 七年一貫學程，高職三年配合四年大學技職體系，學歷獲台灣認可，升學管道無縫對接。</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon fi-gold">🏭</div>
+            <div class="feature-text">
+              <h4>產學攜手合作</h4>
+              <p>與國內多家優質大型企業深度合作，學生在校期間享有豐富實習機會，畢業後可優先錄用。</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon fi-green">🏠</div>
+            <div class="feature-text">
+              <h4>完善生活輔導</h4>
+              <p>提供安全宿舍住宿、專責生輔老師全天候關懷，並定期舉辦節慶聯歡與生活適應活動。</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon fi-red">📜</div>
+            <div class="feature-text">
+              <h4>合法工作機會</h4>
+              <p>嚴格遵循勞動與教育法規，主動協助取得工作許可證，確保學生實習工讀合法安全。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="about-visual">
+          <h3 class="av-title">國際處 核心業務一覽</h3>
+          <ul class="av-list">
+            {% for item in businesses %}
+            <li><div class="av-check">✓</div>{{ item.text }}</li>
+            {% endfor %}
+          </ul>
+          <div class="av-footer">
+            {% for stat in stats %}
+            <div class="av-stat"><span class="av-stat-n" id="av-n{{ loop.index }}">{{ stat.value }}</span><span class="av-stat-l">{{ stat.label }}</span></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

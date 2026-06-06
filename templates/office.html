@@ -1,0 +1,573 @@
+{% extends "base.html" %}
+
+{% block title %}處室業務職掌 — 啟英高中 國際處{% endblock %}
+
+{% block content %}
+<!-- OFFICE HEADER -->
+<section class="hero" style="min-height: auto; padding: 100px 0 40px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>RESPONSIBILITIES</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 1rem;">處室業務職掌</h1>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0;">專業、熱忱的行政服務與輔導團隊，全面護航僑生與建教合作</p>
+    </div>
+  </div>
+</section>
+
+<!-- OFFICE CORE CONTENT -->
+<section class="section" id="office" style="background: var(--cream); padding-top: 4rem;">
+  <div class="section-inner">
+    
+    <!-- 行政團隊成員 (動態從資料庫載入) -->
+    <div class="office-team-section">
+      <h3 class="office-section-sub">行政團隊與聯絡窗口</h3>
+      <div class="office-team-grid">
+        {% for item in responsibilities %}
+        <div class="office-member-card">
+          <div class="office-member-header">
+            <div class="office-member-avatar">
+              {{ item.title[0] if item.title else '員' }}
+            </div>
+            <div class="office-member-info">
+              <h3>{{ item.title }} - {{ item.name }}</h3>
+              <p>啟英高中國際處團隊成員</p>
+            </div>
+          </div>
+          <div class="office-member-body">{{ item.responsibilities | safe }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 詳細業務細則與年度時程 (互動式分頁) -->
+    <div class="office-detail-section">
+      <h3 class="office-section-sub">詳細工作職掌與時程規劃</h3>
+      
+      <!-- 分頁導覽列 -->
+      <div class="office-tabs-nav">
+        <button class="office-tab-btn active" onclick="switchOfficeTab('director')">💼 處室主任職掌</button>
+        <button class="office-tab-btn" onclick="switchOfficeTab('overseas')">🏠 僑生組業務</button>
+        <button class="office-tab-btn" onclick="switchOfficeTab('coop')">🔧 建教組業務</button>
+        <button class="office-tab-btn" onclick="switchOfficeTab('collab')">🤝 協作與年時程</button>
+      </div>
+
+      <!-- 分頁面板 1: 處室主任職掌 -->
+      <div class="office-detail-panel active" id="office-tab-director">
+        <div class="director-grid">
+          <div class="director-card">
+            <span class="director-card-icon">📊</span>
+            <h4>一、核心策略與計畫統籌</h4>
+            <ul class="director-list">
+              <li><strong>年度計畫總召集</strong>：統籌擬定及修訂「產學攜手合作計畫」與「僑生專班實施計畫」，確認符合教育部國教署與僑委會之規範。</li>
+              <li><strong>預算編列與控管</strong>：審核實習處年度預算，包含實習材料費、僑生補助款、招生經費及設備更新經費之配置。</li>
+              <li><strong>科大端對接 (關鍵)</strong>：與合作的科技大學（+4端）系主任或院長保持密切聯繫，確認課程銜接、轉段名額及升學門檻，確保「7年一貫」暢通。</li>
+              <li><strong>召開委員會</strong>：擔任「建教合作委員會」及「僑生輔導委員會」之執行秘書或召集人，主持重大議案討論。</li>
+              <li><strong>處室整體業務運作規劃</strong>：針對僑生組與建教組之業務，進行階段性及臨時任務的調整與分派，以維持處室人力資源的運作與業務順利推行。</li>
+            </ul>
+          </div>
+          <div class="director-card">
+            <span class="director-card-icon">🤝</span>
+            <h4>二、廠商開發與公共關係</h4>
+            <ul class="director-list">
+              <li><strong>優質廠商決策</strong>：親自視察潛在合作廠商，進行最終篩選決策（決定跟誰簽約），確保廠商具備培訓能力且形象良好。</li>
+              <li><strong>外部資源爭取</strong>：爭取產業界捐贈設備、提供獎助學金，或引進業師協同教學。</li>
+              <li><strong>官方應對</strong>：負責接待教育部、僑委會、勞動局之視導與評鑑，並針對缺失進行改善回覆。</li>
+              <li><strong>危機公關發言</strong>：若發生學生重大工安意外或負面新聞，協助校長擬定對外發言策略，並與廠商高層協調賠償與善後機制。</li>
+            </ul>
+          </div>
+          <div class="director-card">
+            <span class="director-card-icon">👥</span>
+            <h4>三、內部管理與督導</h4>
+            <ul class="director-list">
+              <li><strong>跨組協調</strong>：解決建教組（管實習）與僑生組（管生活）之間的灰色地帶衝突（例如：學生因護照過期無法進廠，責任歸屬與後續處理）。</li>
+              <li><strong>績效考核</strong>：督導並考核組長（建教、僑生、巡廠老師）及校內導師之工作績效。</li>
+            </ul>
+          </div>
+          <div class="director-card">
+            <span class="director-card-icon">⚠️</span>
+            <h4>四、學生權益與風險控管</h4>
+            <ul class="director-list">
+              <li><strong>工安與法規紅線</strong>：嚴格監督建教組落實「不超時、不輪大夜班、津貼不低於法規」的三不原則，避免學校被處以高額罰款或停招。</li>
+              <li><strong>緊急事件指揮</strong>：擔任學生重大傷病、職場性騷擾、罷工或集體適應不良事件的緊急應變小組指揮官。</li>
+              <li><strong>休退學控管</strong>：定期檢視僑生流失率，針對高風險學生召開個案會議，盡力降低退學率（影響下年度核班）。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 分頁面板 2: 僑生組業務 -->
+      <div class="office-detail-panel" id="office-tab-overseas">
+        <div class="focus-box">
+          <h4>💡 僑生組業務核心與重點</h4>
+          <p><strong>業務核心</strong>：負責「人」的身份（居留、簽證）、生活輔導、語言與文化適應。</p>
+          <ul class="focus-list">
+            <li><strong>高職端與科大端的「無縫接軌」</strong>：在高三階段，需協助學生準備直升科大的文件（即使是直升，仍需跑行政流程）；並注意學生從高職升上科大時居留證事由變更的轉換合法性。</li>
+            <li><strong>更嚴謹的「工讀管理」</strong>：3+4 專班學生通常從一年級開始就有大量的實習或工讀需求。僑生組必須嚴格監控<strong>工作許可證的效期</strong>。</li>
+          </ul>
+        </div>
+        
+        <div class="office-table-wrapper">
+          <table class="office-table">
+            <thead>
+              <tr>
+                <th>業務類別</th>
+                <th>詳細職掌內容</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-category">一、招生與入境作業</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 招生宣傳與錄取作業</div>
+                    <ul class="item-bullet">
+                      <li>協助編印招生簡章及宣傳資料。</li>
+                      <li>辦理僑生申請入學資格審查。</li>
+                      <li>寄發錄取通知及入學相關文件。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 新生入境與報到</div>
+                    <ul class="item-bullet">
+                      <li>辦理簽證（Visa）及入境相關手續。</li>
+                      <li>安排接機服務與入校交通.</li>
+                      <li>辦理新生註冊、住宿安排與環境介紹。</li>
+                      <li>舉辦新生始業輔導（視基礎訓練而定）。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">二、證件與法規管理</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 居留證（ARC）管理</div>
+                    <ul class="item-bullet">
+                      <li>協助辦理初次辦證、延期、異動登記。</li>
+                      <li>畢業後留台（覓職期）居留證申請輔導。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 工作許可證（Work Permit）</div>
+                    <ul class="item-bullet">
+                      <li><strong>(核心業務)</strong> 協助學生申請及展延工作許可證。</li>
+                      <li>控管工讀時數符合勞動部法規（學期間每週 20 小時限制）。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">三、生活輔導與照顧</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 醫療與保險</div>
+                    <ul class="item-bullet">
+                      <li>辦理僑生健康保險（僑保）及全民健保（健保）加退保。</li>
+                      <li>協助學生就醫及保險理賠申請。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 生活適應與諮詢</div>
+                    <ul class="item-bullet">
+                      <li>建立僑生通訊錄與緊急聯絡網。</li>
+                      <li>定期訪視宿舍，關懷生活起居與衛生習慣。</li>
+                      <li>提供心理諮詢轉介（針對思鄉、課業壓力等）。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">四、獎助學金業務</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 校內外獎助學金</div>
+                    <ul class="item-bullet">
+                      <li>辦理僑委會「學行優良僑生獎學金」。</li>
+                      <li>辦理教育部清寒僑生助學金。</li>
+                      <li>辦理校內僑生專屬獎助學金申請與審核。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 急難救助</div>
+                    <ul class="item-bullet">
+                      <li>協助突發變故學生申請急難慰問金。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">五、工讀與實習輔導</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 廠區實習協調</div>
+                    <ul class="item-bullet">
+                      <li>與建教組配合，追蹤學生在廠適應狀況。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 交通與安全</div>
+                    <ul class="item-bullet">
+                      <li>安排或協調往返學校與工廠之交通車（如有）。</li>
+                      <li>宣導交通安全法規（特別是騎乘機車/電動車）。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">六、活動與文化交流</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 節慶活動</div>
+                    <ul class="item-bullet">
+                      <li>舉辦春節祭祖、端午、中秋等聯歡活動。</li>
+                      <li>辦理僑生歌唱比賽、運動會或文化週。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 社團輔導</div>
+                    <ul class="item-bullet">
+                      <li>輔導僑生聯誼會（僑聯會）運作。</li>
+                      <li>推動與本地學生之交流融合。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">七、行政與通報</td>
+                <td class="col-content">
+                  <div class="item-group">
+                    <div class="item-title">1. 學生動態通報</div>
+                    <ul class="item-bullet">
+                      <li>依規定向教育部及僑委會通報學生休、退、轉學狀況。</li>
+                    </ul>
+                  </div>
+                  <div class="item-group">
+                    <div class="item-title">2. 數據統計</div>
+                    <ul class="item-bullet">
+                      <li>填報每學期僑生人數及相關統計報表。</li>
+                      <li>管理僑生學籍資料庫。</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">八、其他</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>校長或主任臨時交辦任務。</li>
+                    <li>管理校內導師及協助導師工作。</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 分頁面板 3: 建教組業務 -->
+      <div class="office-detail-panel" id="office-tab-coop">
+        <div class="focus-box">
+          <h4>💡 建教組業務核心與重點</h4>
+          <p><strong>業務核心</strong>：負責「事」的訓練（職場、合約）、勞動權益、廠商對接。</p>
+          <p style="margin-top: 5px;"><strong>階段性工作時程</strong>：</p>
+          <ul class="focus-list" style="margin-top: 3px;">
+            <li><strong>2月 - 4月 (前置期)</strong>：陳報下學年度建教班開班計畫，並進行最重要的廠商開發、篩選與評估。</li>
+            <li><strong>5月 - 6月 (招生期)</strong>：召開建教合作委員會以確認合作機構。</li>
+            <li><strong>7月 - 8月 (職前期)</strong>：辦理新生報到、建教生基礎與職前訓練（實施不少於 216 小時之勞安法規、職場倫理、專業課程）。</li>
+            <li><strong>9月 - 1月 (輪調期)</strong>：分發進廠實習、每月或每兩週進行訪視輔導、處理生活津貼查核。</li>
+          </ul>
+        </div>
+
+        <div class="office-table-wrapper">
+          <table class="office-table">
+            <thead>
+              <tr>
+                <th>業務類別</th>
+                <th>詳細職掌內容</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-category">一、計畫與行政</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>擬定建教合作年度實施計畫與預算編列。</li>
+                    <li>撰寫與陳報建教合作班之申請、評估與審核文件（對接國教署）。</li>
+                    <li>督導組內業務執行進度與績效考核。</li>
+                    <li>召開建教合作委員會及相關協調會議。</li>
+                    <li>辦理建教生基礎訓練及職前訓練業務。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">二、廠商開發與評估</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>開發優質合作廠商，進行初步篩選與洽談。</li>
+                    <li>辦理廠商評估作業（確認工作環境、安全性、訓練內容）。</li>
+                    <li>代表學校與合作廠商簽訂「建教合作契約」。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">三、學生管理與權益</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>處理建教生重大勞資爭議或職場性騷擾/霸凌事件。</li>
+                    <li>統籌建教生之基礎訓練與職前訓練規劃。</li>
+                    <li>規劃教師駐廠輔導及巡迴輔導訪視行程。</li>
+                    <li>審核建教生之輪調分配與轉廠/退廠機制。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">四、法規與督導</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>確保所有作業符合《建教生權益保障法》。</li>
+                    <li>應對教育局/國教署之訪視與評鑑作業。</li>
+                    <li>辦理建教生權益說明會（針對學生及家長）。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">五、廠家聯繫與合約</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>協助廠商完成評估表件填報。</li>
+                    <li>整理與歸檔廠商合約、訓練計畫書。</li>
+                    <li>協助廠商申請教育部之相關補助款項（如適用）。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">六、津貼與補助申請</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>辦理建教生生活津貼之查核（確認廠商按時發放且不低於基本工資）。</li>
+                    <li>申請免學費補助、弱勢學生助學金及其他獎助學金。</li>
+                    <li>辦理學生團體保險及確認廠商投保勞保狀況。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">七、巡輔與訪視執行</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>執行定期職場訪視，填寫訪視紀錄表。</li>
+                    <li>蒐集學生在廠實習日誌與出勤紀錄。</li>
+                    <li>第一線處理學生適應不良、宿舍管理或人際衝突問題。</li>
+                    <li>聯繫駐廠老師，掌握學生動態。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">八、成績與考評</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>彙整廠家對學生之「職業技能訓練成績」。</li>
+                    <li>結算學生輪調期間之學業與實習成績。</li>
+                    <li>製作實習證明書或結業證書。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-category">九、其他</td>
+                <td class="col-content">
+                  <ul class="item-bullet">
+                    <li>校長或主任臨時交辦任務。</li>
+                    <li>管理巡廠老師及協助巡廠工作。</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 分頁面板 4: 協作與年時程 -->
+      <div class="office-detail-panel" id="office-tab-collab">
+        <div class="focus-box" style="margin-bottom: 1.5rem;">
+          <h4>🤝 跨組協作區 (灰色地帶與共同責任)</h4>
+          <p>僑生組與建教組如何緊密配合，解決邊界業務以保障學生與學校權益：</p>
+        </div>
+
+        <div class="office-table-wrapper" style="margin-top: 0; margin-bottom: 3rem;">
+          <table class="office-table coop-compare-table">
+            <thead>
+              <tr>
+                <th style="width: 25%;">協作項目</th>
+                <th>僑生組職責</th>
+                <th>建教組職責</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-category">工作許可過期</td>
+                <td class="col-col1">監控證件效期，提醒學生續辦。</td>
+                <td class="col-col2">若證件過期，需立即通知廠商停止實習，避免違法受罰。</td>
+              </tr>
+              <tr>
+                <td class="col-category">學生退學/退廠</td>
+                <td class="col-col1">辦理限期離境手續、通報移民署與僑委會。</td>
+                <td class="col-col2">辦理終止合約、結算津貼、通知廠商停止訓練。</td>
+              </tr>
+              <tr>
+                <td class="col-category">語言隔閡</td>
+                <td class="col-col1">提供華語加強課程，協助翻譯重要公告。</td>
+                <td class="col-col2">要求廠商提供清楚的中文（或雙語）作業指導書 (SOP)。</td>
+              </tr>
+              <tr>
+                <td class="col-category">升學轉銜 (+4階段)</td>
+                <td class="col-col1">協助學生報名對接的科技大學。</td>
+                <td class="col-col2">協助整理 3 年實習成績與證照，移交給科大端。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="focus-box" style="margin-bottom: 1.5rem;">
+          <h4>📅 年度工作時程對照表</h4>
+          <p>此時間軸展示了兩個組別在全年度如何交錯運作與互相協調：</p>
+        </div>
+
+        <div class="office-timeline">
+          <div class="timeline-period-item">
+            <div class="timeline-period-dot"></div>
+            <div class="timeline-period-badge">1月 - 3月</div>
+            <div class="timeline-period-grid">
+              <div class="timeline-period-card os">
+                <h5>🏠 僑生組</h5>
+                <ul>
+                  <li>海外招生後續追蹤</li>
+                  <li>寒假休轉學生招收與輔導</li>
+                  <li>春節祭祖聯歡餐會籌辦</li>
+                </ul>
+              </div>
+              <div class="timeline-period-card coop">
+                <h5>🔧 建教組</h5>
+                <ul>
+                  <li>確認本年度合作廠商</li>
+                  <li>爭取與協調春節祭祖餐會活動之經費贊助</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-period-item">
+            <div class="timeline-period-dot"></div>
+            <div class="timeline-period-badge">4月 - 6月</div>
+            <div class="timeline-period-grid">
+              <div class="timeline-period-card os">
+                <h5>🏠 僑生組</h5>
+                <ul>
+                  <li>核定新生錄取名單</li>
+                  <li>辦理學生入境簽證文件與宿舍整備</li>
+                  <li>提報開班計畫</li>
+                  <li>協助建教組進行評估</li>
+                </ul>
+              </div>
+              <div class="timeline-period-card coop">
+                <h5>🔧 建教組</h5>
+                <ul>
+                  <li>完成廠商篩選與評估</li>
+                  <li>召開合作廠商說明會與建教評估</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-period-item">
+            <div class="timeline-period-dot"></div>
+            <div class="timeline-period-badge">7月 - 8月 (入境高峰)</div>
+            <div class="timeline-period-grid">
+              <div class="timeline-period-card os">
+                <h5>🏠 僑生組</h5>
+                <ul>
+                  <li>安排機場接機服務</li>
+                  <li>居留證與工作許可申請 (最急件辦理)</li>
+                  <li>新生宿舍與生活起居餐點安排</li>
+                </ul>
+              </div>
+              <div class="timeline-period-card coop">
+                <h5>🔧 建教組</h5>
+                <ul>
+                  <li>辦理建教生基礎訓練與職前訓練 (基礎訓練216小時)</li>
+                  <li>簽訂三方訓練契約</li>
+                  <li>分發出廠前之勞工體檢安排</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-period-item">
+            <div class="timeline-period-dot"></div>
+            <div class="timeline-period-badge">9月 (開學)</div>
+            <div class="timeline-period-grid">
+              <div class="timeline-period-card os">
+                <h5>🏠 僑生組</h5>
+                <ul>
+                  <li>啟動新生華語補救強化教學</li>
+                  <li>協助新生開立銀行帳戶與郵局儲金帳戶</li>
+                </ul>
+              </div>
+              <div class="timeline-period-card coop">
+                <h5>🔧 建教組</h5>
+                <ul>
+                  <li>新生正式進廠實習</li>
+                  <li>掌握與輔導學生在廠適應程度</li>
+                  <li>協助新生完成薪資發放帳戶開戶</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-period-item">
+            <div class="timeline-period-dot"></div>
+            <div class="timeline-period-badge">10月 - 隔年6月 (學期中)</div>
+            <div class="timeline-period-grid">
+              <div class="timeline-period-card os">
+                <h5>🏠 僑生組</h5>
+                <ul>
+                  <li>辦理各項傳統節慶關懷與生活輔導</li>
+                  <li>辦理校內外獎助學金申請</li>
+                  <li>居留證延期辦理</li>
+                </ul>
+              </div>
+              <div class="timeline-period-card coop">
+                <h5>🔧 建教組</h5>
+                <ul>
+                  <li>執行每月定期職場訪視</li>
+                  <li>生活津貼查核（確認足額與按時發放）</li>
+                  <li>辦理學生專業技能檢定與考評輔導</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p style="margin-top: 2rem; font-size: 12px; color: var(--text-light); text-align: right;">
+          ※ 業務分配未盡事宜，由處室會議討論後修正。 (修正日期：115.05.26)
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+// Office responsibilities tab switching
+function switchOfficeTab(id){
+  document.querySelectorAll('.office-tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.office-detail-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById('office-tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+{% endblock %}

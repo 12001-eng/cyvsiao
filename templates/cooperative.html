@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}建教合作 — 啟英高中 國際處{% endblock %}
+
+{% block content %}
+<!-- COOPERATIVE HEADER -->
+<section class="hero" style="min-height: auto; padding: 100px 0 40px; background: var(--navy);">
+  <div class="hero-pattern"></div>
+  <div class="hero-inner" style="grid-template-columns: 1fr; text-align: center; padding: 2rem;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+        <div class="hero-dot"></div>
+        <span>PARTNERSHIPS</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 1rem;">企業建教合作夥伴招募</h1>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0;">與產業巨擘共建雙贏藍圖，為企業培育忠誠、高素質的雙語技術棟梁</p>
+    </div>
+  </div>
+</section>
+
+<!-- COOPERATIVE DETAIL -->
+<section class="section cooperative" id="cooperative" style="background: var(--cream); padding-top: 4rem;">
+  <div class="section-inner">
+    <div class="section-header" style="text-align: center; margin-bottom: 3.5rem;">
+      <div class="section-eyebrow">建教優勢</div>
+      <h2 class="section-title">誠邀企業加盟，攜手共創未來</h2>
+      <div class="divider" style="margin: 1rem auto;"></div>
+      <p class="section-desc" style="margin: 0 auto;">啟英高中國際處提供全方位的建教行政、輔導與媒合支援，降低企業運營與用人成本。</p>
+    </div>
+
+    <div class="coop-intro">
+      <div>
+        <div class="coop-benefits" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+          <div class="coop-benefit">
+            <div class="cb-icon">👷</div>
+            <h4>穩定人力來源</h4>
+            <p>建立長期穩固的人才培育管道，填補技術與基層管理人力缺口。</p>
+          </div>
+          <div class="coop-benefit">
+            <div class="cb-icon">💰</div>
+            <h4>稅務優惠補助</h4>
+            <p>實習期間相關培訓與材料支出可依法抵扣稅額，並享有政策津貼。</p>
+          </div>
+          <div class="coop-benefit">
+            <div class="cb-icon">🎯</div>
+            <h4>客製化職能培育</h4>
+            <p>共同商議與調整校內技能課程，為企業量身訂製所需專業技能。</p>
+          </div>
+          <div class="coop-benefit">
+            <div class="cb-icon">🤝</div>
+            <h4>畢業優先錄用</h4>
+            <p>7年學程完畢後，企業擁有絕對優先留用表現優秀技術畢業生的權利。</p>
+          </div>
+          <div class="coop-benefit">
+            <div class="cb-icon">🌏</div>
+            <h4>東南亞布局橋頭堡</h4>
+            <p>透過高素質僑生網絡，協助企業拓展海外東南亞市場與經營布局。</p>
+          </div>
+          <div class="coop-benefit">
+            <div class="cb-icon">📋</div>
+            <h4>行政手續全程代辦</h4>
+            <p>學校國際處包攬居留、工作證、體檢等各項繁瑣行政申辦與文件核銷。</p>
+          </div>
+        </div>
+      </div>
+      <div class="coop-flow">
+        <div class="flow-title">⚡ 合作申請流程</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="fs-num">1</div>
+            <div class="fs-text"><h4>提出合作意向</h4><p>填寫企業合作意向表，註明職缺性質、人數需求與津貼待遇。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="fs-num">2</div>
+            <div class="fs-text"><h4>環境與環境審查</h4><p>國際處實地訪視廠家，評估實習環境安全性、勞安措施與住宿品質。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="fs-num">3</div>
+            <div class="fs-text"><h4>簽訂建教合約</h4><p>嚴格依教育部與國教署規範，正式簽訂校、企、生三方訓練契約書。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="fs-num">4</div>
+            <div class="fs-text"><h4>精準媒合分派</h4><p>依企業條件及學員志願辦理面試，進行精準分派，隨即展開進廠輪調。</p></div>
+          </div>
+          <div class="flow-step">
+            <div class="fs-num">5</div>
+            <div class="fs-text"><h4>駐廠與關懷督導</h4><p>派駐巡廠輔導老師，定期視導，即時處理學生適應與勞資溝通問題。</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coop-packages" style="margin-top: 4rem;">
+      {% for pkg in coop_packages %}
+      <div class="pkg-card {% if pkg.is_featured %}featured{% endif %}">
+        <div class="pkg-header">
+          <div class="pkg-badge">{% if pkg.is_featured %}🌟 {% endif %}{{ pkg.badge }}</div>
+          <div class="pkg-name">{{ pkg.name }}</div>
+          <div class="pkg-sub">{{ pkg.subtitle }}</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-list-rich">
+            {{ pkg.features | safe }}
+          </div>
+          <a href="{{ url_for('contact') }}" class="pkg-action">
+            {% if pkg.is_featured %}🌟 立即接洽深度合作{% elif pkg.badge == '旗艦方案' or '旗艦' in pkg.badge %}🤝 洽談策略聯盟{% else %}📞 立即洽談合作{% endif %}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+  </div>
+</section>
+
+<!-- PARTNER INSTITUTIONS -->
+{% if institutions %}
+<section style="padding: 60px 20px 80px; background: #fff;">
+  <div class="section-inner" style="max-width: 1100px; margin: 0 auto;">
+    <div class="section-header" style="text-align: center; margin-bottom: 2.5rem;">
+      <div class="section-eyebrow">合作夥伴</div>
+      <h2 class="section-title">建教合作機構</h2>
+      <div class="divider" style="margin: 1rem auto;"></div>
+      <p class="section-desc" style="margin: 0 auto;">感謝以下企業夥伴與本校攜手合作，共同培育優質技術人才。</p>
+    </div>
+
+    {% set categories = [('資訊科', '💻'), ('時尚科', '👗'), ('餐管科', '🍳')] %}
+    {% for cat_name, cat_icon in categories %}
+      {% set cat_items = institutions | selectattr('category', 'equalto', cat_name) | list %}
+      {% if cat_items %}
+      <div style="margin-bottom: 2.5rem;">
+        <h3 style="font-size: 1.15rem; color: #333; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.3rem;">{{ cat_icon }}</span> {{ cat_name }}
+          <span style="font-size: 0.8rem; color: #aaa; font-weight: normal;">({{ cat_items|length }} 間合作機構)</span>
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px;">
+          {% for inst in cat_items %}
+          <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px 12px; text-align: center; transition: transform 0.25s ease, box-shadow 0.25s ease;"
+               onmouseenter="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 18px rgba(0,0,0,0.07)';"
+               onmouseleave="this.style.transform=''; this.style.boxShadow='';">
+            {% if inst.logo_url %}
+              <img src="{{ inst.logo_url }}" alt="{{ inst.name }}" style="max-height: 44px; max-width: 100px; object-fit: contain; margin-bottom: 10px;">
+            {% else %}
+              <div style="font-size: 1.8rem; margin-bottom: 6px;">🏢</div>
+            {% endif %}
+            <h4 style="margin: 0 0 4px; font-size: 0.9rem; color: #333; line-height: 1.3;">{{ inst.name }}</h4>
+            {% if inst.location %}
+              <p style="margin: 0; font-size: 0.75rem; color: #999;">📍 {{ inst.location }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+
